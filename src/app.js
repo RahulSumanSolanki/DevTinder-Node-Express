@@ -1,20 +1,39 @@
 const express = require('express');
 const app = express();
-const { adminAuth, userAuth } = require('./middleware');
+const { userAuth } = require('./utils/middleware');
+const {generateUserToken} = require("./utils/authToken");
 
 
 app.post("/user/login", (req, res) => {
-    console.log(req.body); 
-    res.send('User logged in successfully!');
+    console.log(req.headers.authorization);
+     const userToken = generateUserToken();
+     console.log("User Token: ", userToken);
+     const userResponse = {
+        "message": "Your logged in successfully!",
+        "data" : {
+            "userToken": userToken
+        }
+    }
+     res.send(userResponse);
 });
 
 app.use("/user/:user_id", (req, res, next) => {
-    console.log("Middleware for all routes");
-    userAuth(req, res, next);
-    next();
+    try {
+        console.log("Middleware for all routes");
+        userAuth(req, res, next);
+        next();
+    } catch (error) {
+        console.error("Error in middleware:", error.message);
+        if (error.message === 'Unauthorized') {
+            return res.status(401).send('Unauthorized');
+        }else { 
+        return res.status(500).send('Internal Server Error');
+        }
+    }
 });
 
 app.get("/user/:user_id/profile/", (req, res) => {
+    try {
     console.log(req.params);
     res.send(
         {
@@ -28,6 +47,10 @@ app.get("/user/:user_id/profile/", (req, res) => {
             }
         }
     );
+    } catch (error) {
+        console.error("Error fetching profile:", error);
+        return res.status(500).send('Internal Server Error');
+    }
 });
 
 app.post("/user/:user_id/profile", (req, res) => {
