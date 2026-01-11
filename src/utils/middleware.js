@@ -1,4 +1,4 @@
-const {verifyToken} = require('./authToken');
+const { verifyToken } = require('./authToken');
 
 function adminAuth(req, res, next) {
     console.log("req baseUrl : ", req.baseUrl);
