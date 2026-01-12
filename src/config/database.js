@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const { DBUser, DBPassword }    = require('../../credentials');
 
 async function connectToDatabase() {
-    await mongoose.connect('mongodb+srv://rahulsumansolanki_db_user:ENKEhsgb2J2fJizq@namastenode.sicbsll.mongodb.net/HelloWorld');
+    await mongoose.connect(`mongodb+srv://${DBUser}:${DBPassword}@namastenode.sicbsll.mongodb.net/HelloWorld`);
 }
 
 module.exports = { connectToDatabase };
