@@ -1,6 +1,6 @@
 
 const UserModel = require('../models/user');
-const { userAuthMiddleware } = require('../src/utils/authToken');
+const { userAuthMiddleware } = require('../utils/authToken');
 const express = require('express');
 const feedRouter = express.Router();
 

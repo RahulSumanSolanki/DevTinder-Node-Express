@@ -8,9 +8,9 @@ app.use(cokieParser());
 
 console.log('App initialized with middleware.');
 
-const authRouter = require('../routes/auth');
-const profileRouter = require('../routes/profile');
-const feedRouter = require('../routes/feed');
+const authRouter = require('./routes/auth');
+const profileRouter = require('./routes/profile');
+const feedRouter = require('./routes/feed');
 
 app.use('/', authRouter);
 app.use('/', profileRouter);

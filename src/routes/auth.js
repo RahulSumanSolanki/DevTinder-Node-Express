@@ -1,7 +1,7 @@
 
-const { validateSingupData, validateLoginData } = require('../src/utils/validations');
+const { validateSingupData, validateLoginData } = require('../utils/validations');
 const UserModel = require('../models/user');
-const { generateUserToken } = require('../src/utils/authToken');
+const { generateUserToken } = require('../utils/authToken');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const authRouter = express.Router();
