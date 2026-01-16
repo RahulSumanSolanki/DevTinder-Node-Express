@@ -16,14 +16,32 @@ Features
 7. Sent/received requests
 
 
-Rest APIs
+
+## Dev Tinder APIs
+
+# authRoute
 1. POST         /Singup 
 2. POST         /login
-3. GET          /Profile
-4. POST         /profile
-5. Patch        /profile
-6. Delete       /profile
-7. POST         /SendRequest
-8. POST         /ReviewRequest
-9. GET          /Requests
+3. POST         /logout
+
+# profileRoute
+4. GET          /Profile/view
+5. Patch        /profile/edit
+6. Patch        /profile/password
+
+# coonectionRequestRoute
+-- status : interested, ignored
+7. POST         :userId/request/send/:status
+
+-- status : accepted, rejected
+8. POST         /Request/review/:status/:requestedId
+9.  GET         /Requests/recieved
+
+# feedRoute
+
 10. GET         /Connections
+11. GET         /feed
+
+
+
+Status : ignore, intereseted, accepted, rejected

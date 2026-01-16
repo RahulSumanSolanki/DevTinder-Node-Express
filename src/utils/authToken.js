@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 
-function generateUserToken() {
+function generateUserToken(UserData) {
     try {
         const token = jwt.sign(
-            { userId: '001', role: 'user' },
+            { userId: UserData.userName, role: 'user' },
             'usersecrettoken',
             { algorithm: 'HS256', expiresIn: '1h' }
         );
@@ -40,8 +40,31 @@ function verifyToken(token, secret) {
     }
 }
 
+function userAuthMiddleware(req, res, next) {
+    const token = req.cookies.authToken;
+
+    if (!token) {
+        return res.status(401).json({ message: 'No token provided' });
+    }
+
+    const decoded = verifyToken(token, 'usersecrettoken');
+    if (!decoded) {
+        return res.status(401).json({ message: 'Invalid token' });
+    }
+
+    const userData = decoded;
+    if (!userData && userData.userId !== req.params.userName) {
+        return res.status(401).send('Unauthorized');
+    }
+    console.log("------------- Authenticated user:", userData);
+    next();
+}
+
+
+
 module.exports = {
     generateUserToken,
     generateAdminToken,
-    verifyToken
+    verifyToken,
+    userAuthMiddleware
 };
